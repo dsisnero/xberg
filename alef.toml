@@ -18,6 +18,7 @@ languages = [
   "kotlin_android",
   "swift",
   "zig",
+  "crystal",
 ]
 
 
@@ -1466,6 +1467,9 @@ exclude_functions = [
   "embed_multi_vector_async",
 ]
 
+[crates.crystal]
+module_name = "Xberg"
+
 [crates.output]
 python = "crates/xberg-py/src/"
 node = "crates/xberg-node/src/"
@@ -1482,6 +1486,7 @@ kotlin_android = "packages/kotlin-android/"
 swift = "packages/swift/Sources/Xberg/"
 dart = "packages/dart/lib/src/"
 zig = "packages/zig/src/"
+crystal = "packages/crystal/src/"
 
 [crates.exclude]
 fields = [
@@ -1887,6 +1892,7 @@ languages = [
   "swift",
   "zig",
   "homebrew",
+  "crystal",
 ]
 fields_optional = [
   "results[0].metadata.format",
@@ -2036,6 +2042,9 @@ options_type = "ExtractionConfig"
 [crates.e2e.call.overrides.zig]
 function = "extract"
 result_is_json_struct = true
+
+[crates.e2e.call.overrides.crystal]
+module = "Xberg"
 
 [crates.e2e.call.overrides.dart]
 function = "extract"
@@ -3671,6 +3680,9 @@ path = "../../packages/swift"
 [crates.e2e.packages.zig]
 path = "../../packages/zig"
 
+[crates.e2e.packages.crystal]
+path = "../../packages/crystal"
+
 [crates.e2e.registry.packages.zig]
 hash = "xberg-v1.0.14-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
@@ -3935,6 +3947,19 @@ features = { ocr = true, async = false, plugin_system = true, embeddings = true,
 ocr_backends = ["tesseract", "paddleocr", "sceptre"]
 optional_sections = ["system_requirements"]
 snippets = { basic_extraction = "api/extract.md", async_extraction = "api/extract.md", batch_processing = "api/extract_batch.md", ocr_configuration = "ocr/ocr_extraction.md" }
+
+[crates.readme.languages.crystal]
+template = "language_package.md"
+name = "Crystal"
+package_name = "xberg"
+badge_url = "https://img.shields.io/badge/Crystal-shards-007ec6"
+docs_url = "https://xberg.io/"
+description = "Extract text, tables, images, metadata, and code intelligence from 101 file formats and 371 programming languages including PDF, Office documents, images, and audio/video transcripts where native transcription is available. Crystal bindings over the C FFI with `#` doc comments, `JSON::Serializable` types, and fiber-based concurrency for streaming."
+package_manager = ["shards"]
+features = { ocr = true, async = false, plugin_system = true, embeddings = true, code_intelligence = true }
+ocr_backends = ["tesseract", "paddleocr", "sceptre"]
+optional_sections = ["system_requirements"]
+snippets = { basic_extraction = "api/extract.md", batch_processing = "api/extract_batch.md", ocr_configuration = "ocr/ocr_extraction.md" }
 
 [[crates.trait_bridges]]
 trait_name = "OcrBackend"
