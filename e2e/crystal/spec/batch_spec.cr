@@ -15,10 +15,9 @@ describe Xberg do
       __result = Xberg.extract_batch(Array(Xberg::ExtractInput).from_json(("[{\"bytes\":[80,68,70,32,112,108,97,99,101,104,111,108,100,101,114],\"kind\":\"bytes\",\"mime_type\":\"application/x-unknown\"}]")), Xberg::ExtractionConfig.from_json("{}"))
       # TODO: unsupported assertion `not_error`
     end
-    it "extract_batch: archive size cap triggers error" do
-      expect_raises(Exception) do
-        Xberg.extract_batch(Array(Xberg::ExtractInput).from_json(("[{\"bytes\":[97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97],\"kind\":\"bytes\",\"mime_type\":\"text/plain\"}]")), Xberg::ExtractionConfig.from_json("{\"security_limits\":{\"max_content_size\":1}}"))
-      end
+    it "extract_batch: archive size cap triggers in-band error" do
+      __result = Xberg.extract_batch(Array(Xberg::ExtractInput).from_json(("[{\"bytes\":[97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97],\"kind\":\"bytes\",\"mime_type\":\"application/zip\"}]")), Xberg::ExtractionConfig.from_json("{\"security_limits\":{\"max_content_size\":1}}"))
+      __result.errors.size.should eq(1)
     end
     it "extract_batch with unsupported bytes MIME type" do
       __result = Xberg.extract_batch(Array(Xberg::ExtractInput).from_json(("[{\"bytes\":[100,97,116,97],\"kind\":\"bytes\",\"mime_type\":\"application/x-unknown\"}]")), Xberg::ExtractionConfig.from_json("{}"))
