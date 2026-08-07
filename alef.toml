@@ -1,5 +1,5 @@
 [workspace]
-alef_version = "0.54.2"
+alef_version = "0.55.6"
 # -D warnings (emitted into every generated Rust binding as #![allow(...)]).
 extra_clippy_allows = ["redundant_field_names"]
 languages = [
@@ -1855,6 +1855,12 @@ before = "bash scripts/e2e/build-mock-server.sh && cargo build --release -p xber
 command = "cd packages/zig && zig build test -Dffi_path=$PWD/../../target/release -Dffi_include_path=$PWD/../../crates/xberg-ffi/include"
 e2e = "cd e2e/zig && zig build test -Dffi_path=$PWD/../../target/release -Dffi_include_path=$PWD/../../crates/xberg-ffi/include"
 
+[crates.test.crystal]
+precondition = "command -v crystal >/dev/null 2>&1 && command -v shards >/dev/null 2>&1"
+before = "cargo build --release -p xberg-ffi"
+command = "cd packages/crystal && shards build"
+e2e = "cd e2e/crystal && shards install && crystal spec --no-debug --link-flags=\"-L$PWD/../../target/release -Wl,-rpath,$PWD/../../target/release\""
+
 [crates.publish]
 core_crate = "crates/xberg"
 
@@ -3684,7 +3690,7 @@ path = "../../packages/zig"
 path = "../../packages/crystal"
 
 [crates.e2e.registry.packages.zig]
-hash = "xberg-v1.0.14-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+hash = "xberg-v1.1.0-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
 [crates.e2e.packages.wasm]
 name = "@xberg-io/xberg-wasm"
