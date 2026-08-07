@@ -225,6 +225,7 @@ pub fn timestamp_token_to_ms(token_id: u32, timestamp_begin_id: u32) -> u32 {
 /// all (e.g. `timestamps` was `false`, so `<|notimestamps|>` suppressed
 /// them) — callers should fall back to treating the whole sequence as one
 /// untimed block of text in that case.
+#[cfg_attr(alef, alef(skip))] // tuple return (u32, u32, Vec<u32>) is not bindable
 pub fn parse_timestamped_segments(token_ids: &[u32], timestamp_begin_id: u32) -> Vec<(u32, u32, Vec<u32>)> {
     let mut segments = Vec::new();
     let mut open_start: Option<u32> = None;
