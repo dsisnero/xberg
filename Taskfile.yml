@@ -377,6 +377,11 @@ tasks:
     cmds:
       - alef test --e2e --lang zig
 
+  crystal:e2e:
+    desc: "Run Crystal e2e tests"
+    cmds:
+      - alef test --e2e --lang crystal
+
   publish:validate:
     desc: "Validate publish manifests are consistent"
     cmds:

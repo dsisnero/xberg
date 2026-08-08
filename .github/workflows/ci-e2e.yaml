@@ -198,6 +198,10 @@ jobs:
             zig-version: "0.16.0"
             runs-on: ubuntu-24.04-arm
             target: aarch64-unknown-linux-gnu
+          - lang: crystal
+            crystal-version: "1.19.1"
+            runs-on: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-gnu
     steps:
       - uses: actions/checkout@v6
         with:
@@ -398,13 +402,20 @@ jobs:
         with:
           version: ${{ matrix.zig-version }}
 
+      - name: Setup Crystal
+        if: matrix.crystal-version
+        uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: ${{ matrix.crystal-version }}
+
       - name: Setup library paths for FFI bindings
         if: |
           matrix.lang == 'go' || matrix.lang == 'java' ||
           matrix.lang == 'csharp' || matrix.lang == 'elixir' ||
           matrix.lang == 'kotlin-android' ||
           matrix.lang == 'swift' || matrix.lang == 'zig' ||
-          matrix.lang == 'rust' || matrix.lang == 'python'
+          matrix.lang == 'rust' || matrix.lang == 'python' ||
+          matrix.lang == 'crystal'
         shell: bash
         run: |
           export PKG_CONFIG_PATH="${PWD}/crates/xberg-ffi:${PKG_CONFIG_PATH}"
