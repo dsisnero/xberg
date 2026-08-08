@@ -428,7 +428,12 @@ jobs:
       - name: Install Task
         uses: xberg-io/actions/install-task@v1
 
-      - name: Install alef CLI
+      - name: Install alef CLI (fork build — verifies unreleased Crystal backend)
+        if: matrix.lang == 'crystal'
+        uses: ./.github/actions/setup-alef
+
+      - name: Install alef CLI (released)
+        if: matrix.lang != 'crystal'
         uses: xberg-io/actions/install-alef@v1
 
       - name: Pre-build mock-server for Go e2e
