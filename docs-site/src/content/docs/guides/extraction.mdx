@@ -74,6 +74,17 @@ println!("{}", output.results[0].content);
 ```
 
 </TabItem>
+<TabItem label="Crystal">
+
+```crystal title="extract_one.cr"
+require "xberg"
+
+input = Xberg::ExtractInput.from_json(%({"kind":"uri","uri":"document.pdf"}))
+output = Xberg.extract(input, Xberg::ExtractionConfig.from_json("{}"))
+puts output.results[0].try(&.content)
+```
+
+</TabItem>
 </Tabs>
 
 ## Extract from Bytes
