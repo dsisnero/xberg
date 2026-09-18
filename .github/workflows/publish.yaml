@@ -81,6 +81,7 @@ jobs:
       release_dart: ${{ steps.meta.outputs.release_dart }}
       release_swift: ${{ steps.meta.outputs.release_swift }}
       release_zig: ${{ steps.meta.outputs.release_zig }}
+      release_crystal: ${{ steps.meta.outputs.release_crystal }}
       release_kotlin: ${{ steps.meta.outputs.release_kotlin }}
     steps:
       - uses: actions/create-github-app-token@v2
@@ -2136,6 +2137,28 @@ jobs:
         with:
           ffi-crate: xberg-ffi
           package-dir: packages/zig
+
+  crystal-package:
+    name: Build Crystal package (smoke check)
+    needs: prepare
+    if: ${{ needs.prepare.outputs.release_crystal == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.prepare.outputs.checkout_ref }}
+          fetch-depth: 0
+
+          submodules: false
+      - uses: xberg-io/actions/setup-rust@v1
+
+      - name: Install system dependencies
+        uses: ./.github/actions/install-system-deps
+
+      - uses: xberg-io/actions/build-crystal-package@v1
+        with:
+          ffi-crate: xberg-ffi
+          package-dir: packages/crystal
 
   cli-proxy-wheels:
     name: Build CLI proxy wheel (${{ matrix.target }})
